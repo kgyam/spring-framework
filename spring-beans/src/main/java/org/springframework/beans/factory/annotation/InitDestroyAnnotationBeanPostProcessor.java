@@ -177,6 +177,9 @@ public class InitDestroyAnnotationBeanPostProcessor
 	public void postProcessBeforeDestruction(Object bean, String beanName) throws BeansException {
 		LifecycleMetadata metadata = findLifecycleMetadata (bean.getClass ());
 		try {
+			/*
+			执行@PreDestroy
+			 */
 			metadata.invokeDestroyMethods (bean, beanName);
 		} catch (InvocationTargetException ex) {
 			String msg = "Destroy method on bean with name '" + beanName + "' threw an exception";
@@ -336,6 +339,9 @@ public class InitDestroyAnnotationBeanPostProcessor
 		}
 
 		public void invokeDestroyMethods(Object target, String beanName) throws Throwable {
+			/*
+			这里用集合存储表示存在多个销毁方法的定义
+			 */
 			Collection<LifecycleElement> checkedDestroyMethods = this.checkedDestroyMethods;
 			Collection<LifecycleElement> destroyMethodsToUse =
 					(checkedDestroyMethods != null ? checkedDestroyMethods : this.destroyMethods);

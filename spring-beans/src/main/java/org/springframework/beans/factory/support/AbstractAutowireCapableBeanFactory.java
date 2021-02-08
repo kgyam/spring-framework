@@ -646,6 +646,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		}
 
 		// Register bean as disposable.
+		// 注册实现了销毁方法的bean，创建对应的销毁适配器存放到集合中，等销毁的时候进行回调操作
 		try {
 			registerDisposableBeanIfNecessary(beanName, bean, mbd);
 		}
